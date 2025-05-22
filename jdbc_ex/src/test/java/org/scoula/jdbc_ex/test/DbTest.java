@@ -3,6 +3,7 @@ package org.scoula.jdbc_ex.test;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.scoula.jdbc_ex.common.JDBCUtil;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -17,7 +18,7 @@ public class DbTest {
     // = TDD 방법론
 
     @Test // 필수
-    @DisplayName("DB연결 테스트 결과") // 선택
+    @DisplayName("DB연결 테스트 결과") // 테스트 제목 - 선택
 
     public void test1() throws ClassNotFoundException, SQLException {
         Connection con = null;
@@ -36,5 +37,15 @@ public class DbTest {
         //com에 연결이 실패하면 연결 통로에 해당하는 객체가 메모리에 안생김(null을 가짐.)
 
         Assertions.assertNull(con);
+        //실제로는 연결이 잘 되었기 때문에 테스트는 실패로 뜨고, 주소가 들어감
+    }
+
+    @Test
+    @DisplayName("JDBCUtil 라이브러리 이용 테스트 결과")
+    public void test2(){
+        Connection con = JDBCUtil.getConnection();
+        //JDBCUtil 안에서 예외처리 했으므로 부른 곳에서 예외처리 할 필요는 없다
+        Assertions.assertNull(con);
+        // 값이 null인지 보장하는지 -> 진짜 null이면 아무것도 안 나오고, 아니면 다른 것에 대한 보고서가 나옴.
     }
 }
